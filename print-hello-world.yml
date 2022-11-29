@@ -2,7 +2,7 @@ resources:
 - name: repo
   type: git
   source:
-    uri: https://github.com/Pavanireddy6/intro-to-github
+    uri: https://github.com/Pavanireddy6/Concourseprojects.git
 jobs:
 - name: helloooooo
   plan:
