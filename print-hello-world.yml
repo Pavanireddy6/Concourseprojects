@@ -16,9 +16,15 @@ jobs:
             type: registry-image
             source:
               repository: busybox
+          inputs:
+            - name: repo
           run:
-            path: echo
-            args: ["Hello World!"]
+            path: cat
+            args: ["repo/README.md"]
+
+#          run:
+#            path: echo
+#            args: ["Hello World!"]
           # A folder called 'the-artifact' is created in the current directory
 #      outputs:
 #      - name: the-artifact
