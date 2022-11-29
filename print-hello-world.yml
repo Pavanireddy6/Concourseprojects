@@ -1,0 +1,55 @@
+resources:
+- name: repo
+  type: git
+  source:
+    uri: https://github.com/Pavanireddy6/intro-to-github
+jobs:
+- name: helloooooo
+  plan:
+  - get: repo
+    trigger: true
+  - task: print-to-console
+    config:
+      platform: linux
+      image_resource:
+        type: registry-image
+        source:
+          repository: busybox
+          # A folder called 'the-artifact' is created in the current directory
+      outputs:
+      - name: the-artifact
+      # to create a file in the-artifact folder and write a text into it.
+      run:
+        path: sh
+        args:
+        - -cx
+        - |
+          ls -l .
+          echo "hello from another step!" > the-artifact/message
+    # Reads file from previous task
+  - task: read-from-previous
+    config:
+      platform: linux
+      image_resource:
+        type: registry-image
+        source: 
+          repository: busybox
+      inputs:
+      - name: the-artifact
+      run:
+        path: sh
+        args:
+        - -cx
+        - |
+          ls -l .
+          cat the-artifact/message
+        
+
+      # to see what the task sees in its current working directory(ls -LF)
+      # run:
+      #   path: ls
+      #   args: ["-LF"]
+        # #print to the console
+      # run:
+      #   path: echo
+      #   args: ["Heloooo"]
